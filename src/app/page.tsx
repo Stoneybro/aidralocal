@@ -1,103 +1,109 @@
-import Image from "next/image";
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const techStack = [
+    'Next.js', 'Viem', 'Permissionless (Pimlico)', 'Privy', 'Vercel AI SDK',
+    'TanStack Query', 'Shadcn', 'Blockscout', 'Chainlink', 'Account Abstraction'
+  ]
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+  const links = [
+    { name: 'Live Demo', url: 'https://aidra.vercel.app' },
+    { name: 'GitHub', url: 'https://github.com/stoneybro/aidra' },
+
+  ]
+
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+      <div className="container mx-auto px-4 py-16 md:py-24">
+        {/* Hero Section */}
+        <section className="mx-auto max-w-4xl text-center">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+            Aidra Interactive ERC-4337 Smart Wallet
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-xl text-muted-foreground">
+            Smart wallet that turns natural language into batch, single, and scheduled payments.
+          </p>
+          
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Button asChild size="lg">
+              <Link href="/login">Get Started</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link href="#features">Learn More</Link>
+            </Button>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section id="features" className="mt-20 lg:px-16">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <Card className="border-none bg-background shadow-sm">
+              <CardHeader>
+                <CardTitle className="text-xl">Natural Language Processing</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">Aidra converts plain text into executable ERC-4337 UserOperations.</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-none bg-background shadow-sm">
+              <CardHeader>
+                <CardTitle className="text-xl">Gas-Sponsored Transactions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">Uses a paymaster-bundler stack for automated, gas-sponsored transactions.</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-none bg-background shadow-sm md:col-span-2 lg:col-span-1">
+              <CardHeader>
+                <CardTitle className="text-xl">Versatile Use Cases</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">Ideal for payrolls, subscriptions, and both automatic and manual disbursements.</p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Tech Stack Section */}
+        <section className="mt-20">
+          <h2 className="mb-6 text-center text-2xl font-semibold">Tech Stack</h2>
+          <div className="flex flex-wrap justify-center gap-2">
+            {techStack.map((tech) => (
+              <span key={tech} className="rounded-full bg-muted px-4 py-2 text-sm font-medium">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        {/* Links Section */}
+        <section className="mt-20">
+          <div className="flex flex-wrap justify-center gap-6">
+            {links.map((link) => (
+              <a
+                key={link.name}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium underline underline-offset-4 hover:text-primary"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="mt-20 text-center text-sm text-muted-foreground">
+          <Separator className="mx-auto mb-6 max-w-md" />
+          <p>Built for ETHGlobal — by zion livingstone</p>
+        </footer>
+      </div>
+    </main>
+  )
 }
