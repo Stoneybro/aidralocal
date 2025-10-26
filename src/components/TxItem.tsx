@@ -152,7 +152,7 @@ export default function TransactionItem({ tx }: TransactionItemProps) {
         return (
           <div className='space-y-1.5'>
             <div className='text-sm font-semibold'>
-              {tx.intentName || "Unnamed Schedule"}
+              name:{tx.intentName || "Unnamed Schedule"}
             </div>
             <div className='text-xs text-muted-foreground flex items-center gap-1'>
               <span className='text-muted-foreground/70'>ID:</span>
@@ -177,7 +177,7 @@ export default function TransactionItem({ tx }: TransactionItemProps) {
               </div>
               <div className='text-xs'>
                 <span className='text-muted-foreground/70'>Interval:</span>{" "}
-                {formatDuration(tx.duration)}
+                {formatDuration(tx.interval)}
               </div>
             </div>
           </div>
@@ -210,7 +210,7 @@ export default function TransactionItem({ tx }: TransactionItemProps) {
 
             <div className='mt-2 space-y-2 rounded-md border px-3 py-2 bg-muted/30'>
               <div className='text-xs font-medium text-muted-foreground'>
-                Recipients: {tx.recipientCount}
+                Recipients: {tx.recipients.length}
               </div>
             </div>
           </div>

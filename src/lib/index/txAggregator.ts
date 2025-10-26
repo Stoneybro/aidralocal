@@ -63,12 +63,26 @@ export function aggregateTransactionHistory(data: any): UnifiedTransaction[] {
     }
   };
 
+  // helper to check if timestamp equals wallet deploy timestamp
+  const isSameAsWalletDeploy = (ts: any) => {
+    try {
+      if (typeof walletDeployTs === "undefined") return false;
+      const t = asBigInt(ts ?? "0");
+      return t === walletDeployTs;
+    } catch {
+      return false;
+    }
+  };
+
   // EXECUTE / CONTRACT_CALL transactions (Transaction, Transaction executed, executeTransactions)
   const execArr = findArray("executeTransactions", "transaction", "Transaction", "transactions");
   if (execArr) {
     execArr.forEach((tx: any) => {
       // drop if tx timestamp is before wallet deployment
       if (!isAfterWalletDeploy(tx.timestamp)) return;
+
+      // drop if tx timestamp is same as wallet deployment
+      if (isSameAsWalletDeploy(tx.timestamp)) return;
 
       const target = getTarget(tx);
 
@@ -113,6 +127,11 @@ export function aggregateTransactionHistory(data: any): UnifiedTransaction[] {
 
       if (isFaucetCall) baseRecord.label = "faucet-claim";
 
+      // Rule: drop CONTRACT_CALL transactions that aren't faucet claims
+      if (txType === TransactionType.CONTRACT_CALL && baseRecord.label !== "faucet-claim") {
+        return;
+      }
+
       transactions.push(baseRecord);
     });
   }
@@ -123,6 +142,9 @@ export function aggregateTransactionHistory(data: any): UnifiedTransaction[] {
     batchArr.forEach((tx: any) => {
       // drop if batch timestamp is before wallet deployment
       if (!isAfterWalletDeploy(tx.timestamp)) return;
+
+      // drop if batch timestamp is same as wallet deployment
+      if (isSameAsWalletDeploy(tx.timestamp)) return;
 
       // drop if top-level targets the DROP_ADDR
       const topTarget = getTarget(tx);
@@ -159,6 +181,9 @@ export function aggregateTransactionHistory(data: any): UnifiedTransaction[] {
           // use parent timestamp for call time; skip if before wallet deploy
           if (!isAfterWalletDeploy(tx.timestamp)) return;
 
+          // skip if same timestamp as wallet deploy
+          if (isSameAsWalletDeploy(tx.timestamp)) return;
+
           const callTarget = (call.target ?? "").toString().toLowerCase();
           if (callTarget === DROP_ADDR) return; // drop calls to DROP_ADDR
 
@@ -170,8 +195,16 @@ export function aggregateTransactionHistory(data: any): UnifiedTransaction[] {
           }
           if (callTarget === PYUSD_ADDR) callToken = "pyusd";
 
-          transactions.push({
-            type: (call.data && call.data.length > 2) ? TransactionType.CONTRACT_CALL : TransactionType.EXECUTE,
+          const callType = (call.data && call.data.length > 2) ? TransactionType.CONTRACT_CALL : TransactionType.EXECUTE;
+          const isFaucetCall = callTarget === FAUCET_ADDR;
+
+          // Rule: drop CONTRACT_CALL transactions that aren't faucet claims
+          if (callType === TransactionType.CONTRACT_CALL && !isFaucetCall) {
+            return;
+          }
+
+          const callRecord: any = {
+            type: callType,
             id: `${tx.id}-call-${idx}`,
             timestamp: asBigInt(tx.timestamp), // batch call timestamp uses parent timestamp
             transactionHash: tx.transactionHash,
@@ -181,8 +214,11 @@ export function aggregateTransactionHistory(data: any): UnifiedTransaction[] {
             data: call.data ?? null,
             selector: call.selector ?? null,
             success: !!call.success,
+          };
 
-          });
+          if (isFaucetCall) callRecord.label = "faucet-claim";
+
+          transactions.push(callRecord);
         });
       }
     });
@@ -194,6 +230,9 @@ export function aggregateTransactionHistory(data: any): UnifiedTransaction[] {
     intentExecArr.forEach((exe: any) => {
       // drop if execution timestamp is before wallet deployment
       if (!isAfterWalletDeploy(exe.timestamp)) return;
+
+      // drop if execution timestamp is same as wallet deployment
+      if (isSameAsWalletDeploy(exe.timestamp)) return;
 
       // skip if top-level execution target is DROP_ADDR (defensive)
       const exeTarget = getTarget(exe);
@@ -234,6 +273,9 @@ export function aggregateTransactionHistory(data: any): UnifiedTransaction[] {
     intentCreatedArr.forEach((intent: any) => {
       // drop if intent createdAt is before wallet deployment
       if (!isAfterWalletDeploy(intent.createdAt ?? intent.timestampCreated ?? intent.createdAtBlock)) return;
+
+      // drop if intent createdAt is same as wallet deployment
+      if (isSameAsWalletDeploy(intent.createdAt ?? intent.timestampCreated ?? intent.createdAtBlock)) return;
 
       const start = intent.transactionStartTime ?? intent.startTime ?? "0";
       const end = intent.transactionEndTime ?? intent.endTime ?? "0";
@@ -288,5 +330,3 @@ export function aggregateTransactionHistory(data: any): UnifiedTransaction[] {
     return 0;
   });
 }
-
-

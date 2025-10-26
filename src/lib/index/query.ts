@@ -76,7 +76,7 @@ export function useUnifiedWalletHistoryPaginated(
       return transactions;
     },
     enabled: !!walletId,
-    staleTime: 30000,
+    staleTime: 3000,
     ...queryOptions,
   });
 }

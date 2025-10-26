@@ -81,7 +81,7 @@ export function AppSidebarRight({
                   <div className='flex items-center '>
                     <div className=''>
                       <Image
-                        src={"/ethereum.svg"}
+                        src={"/Ethereum.svg"}
                         height={30}
                         width={30}
                         alt='ethereum logo image'
@@ -104,7 +104,7 @@ export function AppSidebarRight({
                   <div className='flex items-center '>
                     <div className=''>
                       <Image
-                        src={"/pyusd.svg"}
+                        src={"/Pyusd.svg"}
                         height={30}
                         width={30}
                         alt='pyusd logo image'
