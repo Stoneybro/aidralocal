@@ -20,7 +20,7 @@ function Page() {
           <div className=' flex flex-col'>
             <div className="">Aidra is a non-custodial ERC-4337 smart wallet.</div>
             <div className=""> Demo mode allows one wallet per social login.</div>
-            <div className="">All transactions are gasless and run exclusively on base sepolia for this demo.</div>
+            <div className="">All transactions are gasless and run exclusively on eth sepolia for this demo.</div>
             
             
            
