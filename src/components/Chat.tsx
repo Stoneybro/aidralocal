@@ -871,7 +871,7 @@ function Chat(walletAddress:{walletAddress:string}) {
           <Image src={"/Aidra.svg"} className="items-center self-center" width={100} height={100} alt="Aidra logo"/>
           <div className="text-2xl font-semibold text-center">Aidra smart wallet ready</div>
           <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-2 gap-4 px-16 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-16 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
-            <Card className="@container/card" onClick={() => setShowOverlay(false)}>
+            <Card className="@container/card">
               <CardHeader>
                 <CardAction>
                   <BsArrowUpRight />
@@ -887,7 +887,7 @@ function Chat(walletAddress:{walletAddress:string}) {
               </CardFooter>
             </Card>
             
-            <Card className="@container/card" onClick={() => setShowOverlay(false)}>
+            <Card className="@container/card">
               <CardHeader>
                 <CardAction>
                   <FaUsers />
@@ -903,7 +903,7 @@ function Chat(walletAddress:{walletAddress:string}) {
               </CardFooter>
             </Card>
             
-            <Card className="@container/card" onClick={() => setShowOverlay(false)}>
+            <Card className="@container/card">
               <CardHeader>
                 <CardAction>
                   <BsArrowRepeat />
@@ -919,7 +919,7 @@ function Chat(walletAddress:{walletAddress:string}) {
               </CardFooter>
             </Card>
             
-            <Card className="@container/card" onClick={() => setShowOverlay(false)}>
+            <Card className="@container/card">
               <CardHeader>
                 <CardAction>
                   <FaUsersGear/>
