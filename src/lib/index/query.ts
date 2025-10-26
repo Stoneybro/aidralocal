@@ -4,7 +4,7 @@ import { aggregateTransactionHistory } from './txAggregator';
 import { UnifiedTransaction, TransactionType, UNIFIED_WALLET_HISTORY_QUERY } from './indexTypes';
 
 
-const GRAPHQL_ENDPOINT = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || 'http://localhost:8080/v1/graphql';
+const GRAPHQL_ENDPOINT =  'https://indexer.dev.hyperindex.xyz/b304502/v1/graphql';
 
 async function fetchGraphQL<T>(query: string, variables?: Record<string, any>): Promise<T> {
   const response = await fetch(GRAPHQL_ENDPOINT, {
